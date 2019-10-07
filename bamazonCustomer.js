@@ -24,30 +24,7 @@ db.query("SELECT * FROM products;", function(err, results) {
   } else {
     var totalPrice;
     console.table(results);
-    inquirer.prompt(
-      [
-        {
-          type: 'text',
-          message: 'What is the item_id of the item you would like to purchase?',
-          name: 'idSelected'
-        },
-        {
-          type: 'text',
-          message: 'How many would you like to purchase?',
-          name: 'quantityWantingToPurchase'
-        }
-      ]
-    ).then(function(userInput) {
-      // console.log(userInput);
-      var id = parseInt(userInput.idSelected);
-      var itemQty = parseInt(userInput.quantityWantingToPurchase)
-      var dbStockLevel = results[id - 1].stock_quantity;
-      totalPrice = results[id - 1].price * itemQty;
-      // console.log(`ID: ${id}`);
-      // console.log(`itemQty: ${itemQty}`);
-      // console.log(`dbStockLevel: ${dbStockLevel}`);
-      evaluateStockingQuantities(dbStockLevel,itemQty,id, totalPrice);
-    });
+    userPrompts(results);
   }
 });
 
@@ -67,4 +44,35 @@ function evaluateStockingQuantities(yourDatabaseStockLevel, AmountWantedToPurcha
   } else {
     console.log('Sorry For The Inconvenience, Please Check Back In A Couple Of Days!');
   }
+};
+
+function userPrompts(results) {
+  inquirer.prompt(
+    [
+      {
+        type: 'text',
+        message: 'What is the item_id of the item you would like to purchase?',
+        name: 'idSelected'
+      },
+      {
+        type: 'text',
+        message: 'How many would you like to purchase?',
+        name: 'quantityWantingToPurchase'
+      }
+    ]
+  ).then(function(userInput) {
+    if (userInput.idSelected > results.length - 1) {
+      console.log('Please Enter A Valid item_id!');
+    } else {
+    // console.log(userInput);
+    var id = parseInt(userInput.idSelected);
+    var itemQty = parseInt(userInput.quantityWantingToPurchase)
+    var dbStockLevel = results[id - 1].stock_quantity;
+    totalPrice = results[id - 1].price * itemQty;
+    // console.log(`ID: ${id}`);
+    // console.log(`itemQty: ${itemQty}`);
+    // console.log(`dbStockLevel: ${dbStockLevel}`);
+    evaluateStockingQuantities(dbStockLevel,itemQty,id, totalPrice);
+    } 
+  });
 };

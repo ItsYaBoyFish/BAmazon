@@ -1,0 +1,30 @@
+{
+  "name": "bamazon",
+  "version": "1.0.0",
+  "description": "A CLI App",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ItsYaBoyFish/BAmazon.git"
+  },
+  "keywords": [
+    "CLI",
+    "Products",
+    "MySql",
+    "Node"
+  ],
+  "author": "Austin Graves",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ItsYaBoyFish/BAmazon/issues"
+  },
+  "homepage": "https://github.com/ItsYaBoyFish/BAmazon#readme",
+  "dependencies": {
+    "dotenv": "^8.1.0",
+    "inquirer": "^7.0.0",
+    "mysql": "^2.17.1"
+  }
+}

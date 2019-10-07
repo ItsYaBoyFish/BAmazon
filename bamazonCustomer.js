@@ -46,7 +46,7 @@ function evaluateStockingQuantities(yourDatabaseStockLevel, AmountWantedToPurcha
   }
 };
 
-function userPrompts(results) {
+function userPrompts(resultsFromTheDBQuery) {
   inquirer.prompt(
     [
       {
@@ -61,14 +61,15 @@ function userPrompts(results) {
       }
     ]
   ).then(function(userInput) {
-    if (userInput.idSelected > results.length - 1) {
+    if (userInput.idSelected > resultsFromTheDBQuery.length) {
       console.log('Please Enter A Valid item_id!');
+      userPrompts(resultsFromTheDBQuery);
     } else {
     // console.log(userInput);
     var id = parseInt(userInput.idSelected);
     var itemQty = parseInt(userInput.quantityWantingToPurchase)
-    var dbStockLevel = results[id - 1].stock_quantity;
-    totalPrice = results[id - 1].price * itemQty;
+    var dbStockLevel = resultsFromTheDBQuery[id - 1].stock_quantity;
+    totalPrice = resultsFromTheDBQuery[id - 1].price * itemQty;
     // console.log(`ID: ${id}`);
     // console.log(`itemQty: ${itemQty}`);
     // console.log(`dbStockLevel: ${dbStockLevel}`);

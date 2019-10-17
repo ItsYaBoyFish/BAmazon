@@ -27,7 +27,11 @@ db.connect(function(err) {
       }
     ]
   ).then(function(result, err) {
+    if (err) {
+      console.log(err);
+    } else {
     switchEvaluation(result);
+    }
   })
 
 
@@ -89,11 +93,17 @@ function switchEvaluation(userInput) {
           }
         ]
       ).then(function(result, err) {
-        var insert = `INSERT INTO products (product_name,department_name,price,stock_quantity)`
-        var values = `values (${result.productName}, ${result.department}, ${result.price}, ${result.stock})`
+        // var insert = `INSERT INTO products (product_name,department_name,price,stock_quantity)`
+        // var values = `values (${result.productName}, ${result.department}, ${result.price}, ${result.stock})`
 
-        console.log(`${insert} ${values}`);
-        db.query(`INSERT INTO products (product_name, department_name, price, stock_quantity) values ('${result.productName}', '${result.department}', '${result.price}', '${result.stock}');`, function(err, dataFromDatabase, fields) {
+        // console.log(`${insert} ${values}`);
+        // db.query(`INSERT INTO products (product_name, department_name, price, stock_quantity) values ('${result.productName}', '${result.department}', '${result.price}', '${result.stock}');`, function(err, dataFromDatabase, fields) {
+          db.query('INSERT INTO products SET ?', {
+            product_name: result.productName, 
+            department_name: result.department,
+            price: result.price,
+            stock_quantity: result.stock
+          }, function(err, result) {
           if (err) {
             console.log(err);
           } else {
